@@ -1,0 +1,3 @@
+rm hhkb_p*
+make clean -f Makefile.pjrc
+make KEYMAP=es -f Makefile.pjrc teensy

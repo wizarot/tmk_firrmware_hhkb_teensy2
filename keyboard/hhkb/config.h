@@ -41,14 +41,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 /* period of tapping(ms) */
-#define TAPPING_TERM    300
+// 200 is ok but the space pause is a little disconcerting to me
+// 400 is also ok and seems more natural than 200
+//
+#define TAPPING_TERM    400
 /* tap count needed for toggling a feature */
 #define TAPPING_TOGGLE  5
 /* Oneshot timeout(ms) */
-#define ONESHOT_TIMEOUT 300
+#define ONESHOT_TIMEOUT 400
 
 /* Boot Magic salt key: Space */
-#define BOOTMAGIC_KEY_SALT      KC_FN6
+// #define BOOTMAGIC_KEY_SALT      KC_FN6
 
 
 /*

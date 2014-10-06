@@ -38,35 +38,25 @@
  */
 static inline void KEY_ENABLE(void) { (PORTB &= ~(1<<6)); }
 static inline void KEY_UNABLE(void) { (PORTB |=  (1<<6)); }
-static inline bool KEY_STATE(void) { return (PIND & (1<<7)); }
-static inline void KEY_PREV_ON(void) { (PORTB |=  (1<<7)); }
-static inline void KEY_PREV_OFF(void) { (PORTB &= ~(1<<7)); }
+static inline bool KEY_STATE(void) { return (PINF & (1<<0)); }
+static inline void KEY_PREV_ON(void) { (PORTF |=  (1<<1)); }
+static inline void KEY_PREV_OFF(void) { (PORTF &= ~(1<<1)); }
 static inline void KEY_POWER_ON(void) {}
 static inline void KEY_POWER_OFF(void) {}
 static inline void KEY_INIT(void)
 {
     DDRB  = 0xFF;
     PORTB = 0x00;
-    DDRD  &= ~0x80;
-    PORTD |= 0x80;
     /* keyswitch board power on */
-    DDRD  |=  (1<<4);
-    PORTD |=  (1<<4);
-#ifdef HHKB_JP
-    /* row extention for HHKB JP */
-    DDRC  |= (1<<6|1<<7);
-    PORTC |= (1<<6|1<<7);
-#endif
+    DDRF  |=  (1<<1);
+    DDRF  &=  ~(1<<0);
+    PORTF |=  (1<<0);
     KEY_UNABLE();
     KEY_PREV_OFF();
 }
 static inline void KEY_SELECT(uint8_t ROW, uint8_t COL)
 {
     PORTB = (PORTB & 0xC0) | (((COL) & 0x07)<<3) | ((ROW) & 0x07);
-#ifdef HHKB_JP
-    if ((ROW) & 0x08) PORTC = (PORTC & ~(1<<6|1<<7)) | (1<<6);
-    else              PORTC = (PORTC & ~(1<<6|1<<7)) | (1<<7);
-#endif
 }
 
 

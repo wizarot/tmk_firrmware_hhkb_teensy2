@@ -103,7 +103,7 @@ uint8_t matrix_scan(void)
             // 10us wait does    work on Teensy++ with pro
             // 10us wait does    work on 328p+iwrap with pro
             // 10us wait doesn't work on tmk PCB(8MHz) with pro2(very lagged scan)
-            _delay_us(5);
+            _delay_us(1);
 
             if (KEY_STATE()) {
                 matrix[row] &= ~(1<<col);
