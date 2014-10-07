@@ -8,7 +8,7 @@
 const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Layer 0: Default Layer
      * ,----------------------------------------------------------------------------.
-     * |Esc |   1|   2|   3|   4|   5|   6|   7|   8|   9|   0|   -|   =|VolDn|VolUp|
+     * |Esc/~|   1|   2|   3|   4|   5|   6|   7|   8|   9|   0|   -|   =|VolDn|VolUp|
      * |----------------------------------------------------------------------------|
      * |Tab     |   Q|   W|   E|   R|   T|   Y|   U|   I|   O|   P|   [|   ]|      \|
      * |----------------------------------------------------------------------------|
@@ -19,7 +19,7 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *       |Gui  |Alt    |         SpaceFN         |Alt    |Gui  |
      *       `-----------------------------------------------------'
      */
-    KEYMAP(ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, _VOLDOWN, _VOLUP,  \
+    KEYMAP(FN3, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, _VOLDOWN, _VOLUP,  \
            TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSPC,              \
            LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,ENT,                    \
            LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RSFT,FN0,                    \
@@ -38,7 +38,7 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *       |   |     |                       |     |   |
      *       `-------------------------------------------'
      */ 
-    KEYMAP(SYSTEM_POWER, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10,TRNS, F11, TRNS, TRNS,  \
+    KEYMAP(POWER, SLEP,  WAKE,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10,TRNS, F11, TRNS, TRNS,  \
            CAPS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PSCR,SLCK,PAUS, UP, TRNS, BSLS,                \
            TRNS,VOLD,VOLU,MUTE,TRNS,TRNS,PAST,PSLS,HOME,PGUP,LEFT,RGHT,PENT,                      \
            TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,PPLS,PMNS,END, PGDN,DOWN,TRNS,TRNS,                      \
@@ -72,34 +72,37 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * user defined action function
  */
 enum function_id {
-    CTRL_SPACE_I,       // Ctrl + Up(SpaceFN) -> PgUp
+    SHIFT_ESC,       // Shift + Esc -> Tilde
 };
 
 void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
-#   define MODS_CTRL_MASK   (MOD_BIT(KC_LCTRL)|MOD_BIT(KC_RCTRL))
-    static uint8_t ctrl_space_i_prev_ctrl;
+    if (record->event.pressed) dprint("P"); else dprint("R");
+    if (record->tap.interrupted) dprint("i");
+
+#   define MODS_SHIFT_MASK   (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
+    static uint8_t shift_esc_prev_shift;
 
     switch (id) {
-        // Ctrl + Up(SpaceFN) -> PgUp
-        case CTRL_SPACE_I:
-            ctrl_space_i_prev_ctrl = get_mods()&MODS_CTRL_MASK;
+        // Shift + Esc -> ~
+        case SHIFT_ESC:
+            shift_esc_prev_shift = get_mods()&MODS_SHIFT_MASK;
             if (record->event.pressed) {
-                if (ctrl_space_i_prev_ctrl) {
-                    del_mods(ctrl_space_i_prev_ctrl);   // remove Ctrl
-                    add_key(KC_PGUP);
-                    send_keyboard_report(); // send PgUp without Ctrl
-                    add_mods(ctrl_space_i_prev_ctrl);   // return Ctrl but not sent
+                if (shift_esc_prev_shift) {
+                    add_key(KC_GRV);
+                    send_keyboard_report(); // send grave with shift for tilde result
                 } else {
-                    add_key(KC_UP);
+                    del_mods(shift_esc_prev_shift);   // remove shift
+                    add_key(KC_ESC);
                     send_keyboard_report();
+                    add_mods(shift_esc_prev_shift);   // return shift but not sent
                 }
             } else {
-                if (ctrl_space_i_prev_ctrl) {
-                    del_key(KC_PGUP);
+                if (shift_esc_prev_shift) {
+                    del_key(KC_GRV);
                     send_keyboard_report();
                 } else {
-                    del_key(KC_UP);
+                    del_key(KC_ESC);
                     send_keyboard_report();
                 }
             }
@@ -108,11 +111,22 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 }
 
 /*
- * Fn action definition
- */
+    switch (id) {
+        case SHIFT_ESC:
+            if ( keyboard_report->mods & (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) ) {
+                add_key(KC_GRV);
+                send_keyboard_report(); // send PgUp without Ctrl
+            } else {
+                add_key(KC_ESC);
+                send_keyboard_report();
+            }
+            break;
+    }
+    */
+
 const uint16_t PROGMEM fn_actions[] = {
     [0] = ACTION_LAYER_MOMENTARY(1),
     [1] = ACTION_LAYER_TAP_KEY(2, KC_SPACE),
     [2] = ACTION_MODS_KEY(MOD_LSFT, KC_GRV),    // tilde
-    [3] = ACTION_FUNCTION(CTRL_SPACE_I),        // Ctrl + Up(SpaceFN) -> PgUp
+    [3] = ACTION_FUNCTION(SHIFT_ESC),
 };
