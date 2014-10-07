@@ -1,3 +1,12 @@
+FORKED REPO NOTES:
+==================
+
+This is a quick fork of Hasu's TMK firmware (see repo address below) for review on a specific Geekhack thread. This is my first time playing around with TMK firmware and it took me some time to sort out things to get it working on a teensy 2.0 based on Smasher816's writeup here: http://geekhack.org/index.php?topic=57008.0
+
+Note that this fork isn't current with tmk (I'm not rebasing this and if I do so I'll probably move this to a new repository) as recent commits broke my builds (even clean builds with no customization) so I'm keeping this here as a historical snapshot of working teensy 2.0 firmware.
+
+Most of my customizations are in the keyboard/hhkb subdirectory. See the changes I made in the following commit: https://github.com/altercation/tmk_firrmware_hhkb_teensy2/commit/b1725e96a633bdb5ff54d397260b66210cbedead
+
 TMK Keyboard Firmware Collection
 ================================
 This is a keyboard firmware with some useful features for Atmel AVR controller.
