@@ -23,7 +23,7 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC, FN3,              \
            LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,ENT,                    \
            LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RSFT,FN0,                    \
-                LGUI,LALT,          FN1,                RALT,PAUS),
+                LGUI,LALT,          FN1,                RALT,RGUI),
 
     /* Layer 1: HHKB mode (HHKB Fn)
      * ,-----------------------------------------------------------.
@@ -50,11 +50,11 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,----------------------------------------------------------------------------.
      * |LANG3   |  F5|  F6|  F7|  F8|    |    |    |    |    |PScn|    |    |      \|
      * |----------------------------------------------------------------------------|
-     * |LALT      |  F1|  F2|  F3|  F4|    |Left|Down|  Up|Righ|Home| End|LANG1     |
+     * |          |  F1|  F2|  F3|  F4|    |Left|Down|  Up|Righ|Home| End|LANG1     |
      * |----------------------------------------------------------------------------|
      * |           |    |    |    |    |LANG2|   |   ~|   `|    |    |         |    |
      * |----------------------------------------------------------------------------|
-     *       |LANG4|       |                         |Space  |PAUS |
+     *       |     |       |                         |       |     |
      *       `-----------------------------------------------------'
      *
      *       LANG1 (SpaceFN+ENTER) assigned in i3 to spawn terminal
@@ -63,9 +63,9 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     KEYMAP(GRV, F9, F10, F11, F12,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, _MUTE,OUT,   \
            LANG3,F5 ,F6  ,F7  ,F8  ,TRNS,TRNS,TRNS,TRNS,TRNS, PSCR,TRNS,TRNS,BSLS,      \
-           LALT,F1  ,F2  ,F3  ,F4  ,TRNS,LEFT,DOWN,UP,RGHT,HOME,END ,LANG1,             \
-           TRNS,TRNS,TRNS,TRNS,TRNS,LANG2, TRNS,GRV, FN2, TRNS,TRNS,TRNS,NO,            \
-                LANG4,TRNS,          TRNS,             SPC ,LANG5),
+           LCTL,F1  ,F2  ,F3  ,F4  ,TRNS,LEFT,DOWN,UP,RGHT,HOME,END ,LANG1,             \
+           TRNS,TRNS,TRNS,TRNS,TRNS,LANG2, TRNS,TRNS, TRNS, TRNS,TRNS,TRNS,NO,            \
+                TRNS,TRNS,          TRNS,             TRNS,TRNS),
 };
 
 /*
