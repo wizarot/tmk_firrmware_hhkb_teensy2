@@ -1,7 +1,7 @@
-Keycode Symbol Table
+键盘代码对照清单
 ====================
-Keycodes are defined in `common/keycode.h`.
-Range of 00-A4 and E0-E7 are identical with HID Usage:
+Keycodes在文件 `common/keycode.h` 中进行定义.
+其中 00-A4 和 E0-E7 为蓝牙HID定义中使用:
 <http://www.usb.org/developers/devclass_docs/Hut1_11.pdf>
 Virtual keycodes are defined out of above range to support special actions.
 
