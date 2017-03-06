@@ -47,12 +47,12 @@ cd 到项目的目录中去,注意下选择你对应的键盘或者转换器,我
 
 程序控制器
 ------------------
-Now you have **hex** file to program on current directory. This **hex** is only needed to program your controller, other files are used for development and you may leave and forget them.
+最终编译出来的 **hex** 这个文件是你需要的,其它都是源代码你可以根据实际需要来进行修改和重新编译之类的, 这个hex上传到硬件就可以跑起来了.下面详细讲一遍方法,如果还是不明白可以考虑看看teensy的官网,配图那个我觉得更好理解.
 
-### 1. Start bootloader
+### 1. 启动bootloader
 How to program controller depends on controller chip and its board design. To program AVR USB chips you'll need to start it up in bootloader mode. Most of boards with the chip have a push button to let bootloader come up. Consult with your controller board manual.
 
-### 2. Program with DFU bootloader
+### 2. Program with DFU bootloader(用不上先跳过)
 Stock AVR USB chip including ATmega32U4 has DFU bootloader by factory default. `FLIP` is a DFU programmer on Windows offered by Atmel. Open source command line tool `dfu-programmer` also supports AVR chips, it runs on Linux, Mac OSX and even Windows.
 
 To program AVR chip with DFU bootloader use `FLIP` or `dfu-programmer`.
@@ -67,7 +67,7 @@ Or to program with `dfu-programmer` run:
 
     $ make -f Makefile.<variant> dfu
 
-#### FLIP GUI tutorial
+#### FLIP GUI tutorial(用不上先跳过)
 1. On menu bar click Device -> Select, then. `ATmega32u4`.
 2. On menu bar click Settings -> Communication -> USB, then click 'Open' button on 'USB Port Connection' dialog.
 At this point you'll see grey-outed widgets on the app get colored and ready.
@@ -83,17 +83,17 @@ See also these instructions if you need.
 - <http://www.atmel.com/Images/doc7769.pdf>
 
 
-### 3. Program with Teensy Loader
-If you have PJRC Teensy see instruction of `Teensy Loader`.
+### 3. Teensy主板上传
+看下面这个地址的说明来使用 `Teensy Loader`,第一步安装那个软件,第二步编译好的hex文件选择上,第三步插上usb线到teensy板,第四步按板子上那个bootloader按钮上传完事儿就行了,就这么简单.
 
 - <http://www.pjrc.com/teensy/loader.html>
 
-Or use this command if you have command line version of Teensy Loader installed.
+如果你安装了Teensy Loader 的命令行上传工具,就用下面这个命令来上传安装(我没试过,不知道是否可以.).
 
     $ make -f Makefile.<variant> teensy
 
 
-### 4. Program with Other programmer
+### 4. Program with Other programmer(没用到,还是跳过)
 You may want to use other programmer like `avrdude` with AVRISPmkII, Arduino or USBasp. In that case you can still use make target `program` for build with configuring `PROGRAM_CMD` in Makefile.
 
     $ make -f Makefile.<variant> program
@@ -110,12 +110,12 @@ You may want to use other programmer like `avrdude` with AVRISPmkII, Arduino or 
 
 
 
-Makefile Options
+Makefile Options选项
 ----------------
-### 1. MCU and Frequency.
+### 1. MCU and Frequency.(如果用teensy2.0,这些是不用改的,反正我直接编译就可以用了,你如果不确定自己知道在干什么就别乱动了)
 
-    MCU = atmega32u4       # Teensy 2.0
-    #MCU = at90usb1286      # Teensy++ 2.0
+    MCU = atmega32u4       # Teensy 2.0 (我用的这个)
+    #MCU = at90usb1286      # Teensy++ 2.0(这个也很容易买到但如果不是熟手,最好还是用上面那款比较安全)
     F_CPU = 16000000
 
 Set your MCU and its clock in Hz.
@@ -128,8 +128,8 @@ Set your MCU and its clock in Hz.
 
 If you are using PJRC Teensy use `512` for `BOOTLOADER_SIZE`, otherwise use `4096` unless you are sure.
 
-### 2. Features
-Optional. Note that ***comment out*** with `#` to disable them.
+### 2. 特性
+如果不启用,则使用 `#`来注释掉对应的行.
 
     BOOTMAGIC_ENABLE = yes      # Virtual DIP switch configuration(+1000)
     MOUSEKEY_ENABLE = yes       # Mouse keys(+4700)
@@ -154,7 +154,7 @@ Optional. Set proper command for your controller, bootloader and programmer. Thi
 
 
 
-Config.h Options
+Config.h 文件中的配置项
 ----------------
 ### 1. Magic command key combination
 
@@ -167,7 +167,7 @@ Config.h Options
     /* Locking CapsLock re-synchronize hack */
     #define CAPSLOCK_LOCKING_RESYNC_ENABLE
 
-### 3. Disable Debug and Print
+### 3. 关闭debug模式
 
     /* disable debug print */
     #define NO_DEBUG
@@ -175,7 +175,7 @@ Config.h Options
     /* disable print */
     #define NO_PRINT
 
-### 4. Disable Action Features
+### 4. 关闭一些特性
 
     #define NO_ACTION_LAYER
     #define NO_ACTION_TAPPING
@@ -184,3 +184,5 @@ Config.h Options
     #define NO_ACTION_FUNCTION
 
 ***TBD***
+
+
