@@ -1,42 +1,42 @@
-Build Firmware and Program Controller
+建立固件和程序控制器
 =====================================
 
 
-Download and Install
+下载和安装
 --------------------
-### 1. Install Tools
+### 1. 安装相关工具
 
-1. **Toolchain** On Windows install [MHV AVR Tools][mhv] for AVR GCC compiler and [Cygwin][cygwin](or [MinGW][mingw]) for shell terminal. On Mac you can use [CrossPack][crosspack]. On Linux you can install AVR GCC with your favorite package manager.
+1. **Toolchain** Windows系统 [MHV AVR Tools][mhv] for AVR GCC compiler and [Cygwin][cygwin](or [MinGW][mingw]) for shell terminal. Mac系统 [CrossPack][crosspack]. Linux系统安装 AVR GCC .
 
-2. **Programmer** On Windows install [Atmel FLIP][flip]. On Mac and Linux install [dfu-programmer][dfu-prog].
+2. **Programmer** Windows: [Atmel FLIP][flip]. Mac 和 Linux [dfu-programmer][dfu-prog].
 
 3. **Driver** On Windows you start DFU bootloader on the chip first time you will see 'Found New Hardware Wizard' to install driver. If you install device driver properly you can find chip name like 'ATmega32U4' under 'LibUSB-Win32 Devices' tree on 'Device Manager'. If not you shall need to update its driver on 'Device Manager'. You will find the driver in `FLIP` install directory like: C:\Program Files (x86)\Atmel\Flip 3.4.5\usb\. In case of `dfu-programmer` use its driver.
 
-If you use PJRC Teensy you don't need step 2 and 3 above, just get [Teensy loader][teensy-loader].
+我们这里使用Teensy开发板,所以直接使用这个就行了,前面2,3步都可以省略 [Teensy loader][teensy-loader].
 
 
-### 2. Download source
-You can find firmware source at github:
+### 2. 下载源代码
+github上的项目:
 
-- <https://github.com/tmk/tmk_keyboard>
+- <https://github.com/wizarot/tmk_firrmware_hhkb_teensy2>
 
-If you are familiar with `Git` tools you are recommended to use it but you can also download zip archive from:
+直接用git工具clone下来,或者点击下载下面这个zip压缩包:
 
-- <https://github.com/tmk/tmk_keyboard/archive/master.zip>
+- <https://github.com/wizarot/tmk_firrmware_hhkb_teensy2/archive/master.zip>
 
 
-Build firmware
+编译项目
 --------------
-### 1. Open terminal
-Open terminal window to get access to commands. Use Cygwin(or MingGW) `shell terminal` in Windows or `Terminal.app` on Mac OSX. In Windows press `Windows` key and `R` then enter `cmd` in 'Run command' dialog showing up.
+### 1. 打开命令行工具
+这步懒得翻译了,反正windows你就用cmd,mac,linux都用对应的,这个你都不会就问问比人吧.
 
-### 2. Change directory
-Move to project directory in the firmware source.
+### 2. 进入项目录
+cd 到项目的目录中去,注意下选择你对应的键盘或者转换器,我这里用hhkb键盘,所以就是keyboard/hhkb/ 目录.
 
     cd tmk_keyboard/{'keyboard' or 'converter'}/<project>
 
-### 3. Make
-Build firmware using GNU `make` command. You'll see `<project>_<variant>.hex` file in that directory unless something unexpected occurs in build process.
+### 3. Make(这个不翻译,make就是编译)
+参照下面这个例子,用make命令对你的项目进行编译,最终完成一个 `<project>_<variant>.hex` 这样的hex文件,然后teensy可以用官网下载的对应软件把这hex文件上传到固件就可以使用了.
 
 
     make -f Makefile.<variant> clean
@@ -45,7 +45,7 @@ Build firmware using GNU `make` command. You'll see `<project>_<variant>.hex` fi
 
 
 
-Program Controller
+程序控制器
 ------------------
 Now you have **hex** file to program on current directory. This **hex** is only needed to program your controller, other files are used for development and you may leave and forget them.
 
