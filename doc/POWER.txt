@@ -1,4 +1,4 @@
-Time to Sleep
+休眠时间
 =============
 USB suspend     no activity on USB line for  3ms
 No Interaction  no user interaction
